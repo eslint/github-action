@@ -1,27 +1,28 @@
 {
-  "name": "javascript-action",
-  "version": "1.0.0",
-  "description": "JavaScript Action Template",
-  "main": "index.js",
+  "name": "@eslint/github-action",
+  "version": "0.0.0",
+  "description": "Run ESLint on GitHub pull requests",
+  "main": "src/index.js",
   "scripts": {
-    "lint": "eslint index.js",
-    "test": "eslint index.js && jest"
+    "lint": "eslint src/",
+    "test": "npm run lint && jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/eslint/github-action.git"
   },
   "keywords": [
+    "ESLint",
     "GitHub",
     "Actions",
     "JavaScript"
   ],
-  "author": "GitHub",
-  "license": "MIT",
+  "author": "Nicholas C. Zakas",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/eslint/github-action/issues"
   },
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/eslint/github-action#readme",
   "dependencies": {
     "@actions/core": "^1.1.1"
   },

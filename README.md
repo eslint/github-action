@@ -1,65 +1,67 @@
-# Create a JavaScript Action
+# ESLint GitHub Action
 
-Use this template to bootstrap the creation of a JavaScript action.:rocket:
+This GitHub Action is designed to run ESLint on a pull request and leave comments on any issues found.
 
-This template includes tests, linting, a validation workflow, publishing, and versioning guidance.  
+### Prerequisites
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+In order to use this action, your project must:
 
-## Create an action from this template
+1. Have ESLint configured to run within your project. That means you must have a `package.json` file that specifies the version of `eslint` to use and any shareable configs that your project relies on.
+1. [Create a GitHub token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) with access to the repository you want the action to run on.
+1. Store that GitHub token as a [secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) in the repository you want this action to run on.
 
-Click the `Use this Template` and provide the new repo details for your action
+## Configuring
 
-## Code in Master
+First, create an npm script called `eslint:github-action` in your `package.json` file. This script should run ESLint on all of the files that should be linted on a pull request. The script must include the `-f json` option, which outputs ESLint results in JSON format. This is important for the action to understand the ESLint results. Here's an example script:
 
-Install the dependencies  
-```bash
-$ npm install
-```
-
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml contains defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-const core = require('@actions/core');
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
+```json
+{
+  "scripts": {
+    "eslint:github-action": "eslint src/ -f json"
   }
 }
-
-run()
 ```
 
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+You can also add in any additional command line arguments to ESLint in the `eslint:github-action` script so that ESLint runs exactly the way you want it to.
 
-## Publish to a distribution branch
+Next, you'll need to create GitHub Actions workflow file to use this action, and you'll need to know the latest version of this action.
+
+To find the latest version of this action, see the [releases](https://github.com/eslint/github-action/releases) page. If the latest release is `v1`, you would use this action in your workflow file as follows:
+
+```yaml
+name: Run ESLint on Pull Requests
+
+on:
+  - pull_request
+
+jobs:
+  build:
+    name: Run ESLint
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Check out the repository
+      - uses: actions/checkout@v1
+
+      # Install Node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      # Install your dependencies
+      - run: npm ci
+
+      # Run ESLint
+      - uses: eslint/github-action@v1
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+```
+
+## Development
+
+The `master` branch is for ongoing development. You should not use the `master` branch in your GitHub workflows because it may not always work correctly.
+
+## Creating a release
 
 Actions are run from GitHub repos.  We will create a releases branch and only checkin production modules (core in this case). 
 
@@ -79,30 +81,4 @@ $ npm prune --production
 $ git add node_modules
 $ git commit -a -m "prod dependencies"
 $ git push origin releases/v1
-```
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing the releases/v1 branch
-
-```yaml
-uses: actions/javascript-action@releases/v1
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and tested action
-
-```yaml
-uses: actions/javascript-action@v1
-with:
-  milliseconds: 1000
 ```

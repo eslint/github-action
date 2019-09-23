@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/eslint/github-action#readme",
   "dependencies": {
-    "@actions/core": "^1.1.1"
+    "@actions/core": "^1.1.1",
+    "@actions/exec": "^1.0.1",
+    "@actions/github": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "^6.3.0",

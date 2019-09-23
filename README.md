@@ -7,7 +7,7 @@ This GitHub Action is designed to run ESLint on a pull request and leave comment
 In order to use this action, your project must:
 
 1. Have ESLint configured to run within your project. That means you must have a `package.json` file that specifies the version of `eslint` to use and any shareable configs that your project relies on.
-1. [Create a GitHub token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) with access to the repository you want the action to run on.
+1. [Create a GitHub token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) with access to the repository you want the action to run on. If you are using a GitHub App token, it must include the `checks:write` permission.
 1. Store that GitHub token as a [secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) in the repository you want this action to run on.
 
 ## Configuring

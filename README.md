@@ -4,11 +4,7 @@ This GitHub Action is designed to run ESLint on a pull request and leave comment
 
 ### Prerequisites
 
-In order to use this action, your project must:
-
-1. Have ESLint configured to run within your project. That means you must have a `package.json` file that specifies the version of `eslint` to use and any shareable configs that your project relies on.
-1. [Create a GitHub token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) with access to the repository you want the action to run on. If you are using a GitHub App token, it must include the `checks:write` permission.
-1. Store that GitHub token as a [secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) in the repository you want this action to run on.
+In order to use this action, your project must have ESLint configured to run within your project. That means you must have a `package.json` file that specifies the version of `eslint` to use and any shareable configs that your project relies on.
 
 ## Configuring
 
@@ -57,28 +53,10 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-## Development
+**Note:** The `GITHUB_TOKEN` secret is automatically created by GitHub for every project; there is no need to create your own secret unless you want to use a token that is different from the default.
 
-The `master` branch is for ongoing development. You should not use the `master` branch in your GitHub workflows because it may not always work correctly.
+## Branches
 
-## Creating a release
-
-Actions are run from GitHub repos.  We will create a releases branch and only checkin production modules (core in this case). 
-
-Comment out node_modules in .gitignore and create a releases/v1 branch
-```bash
-# comment this out distribution branches
-# node_modules/
-```
-
-```bash
-$ git checkout -b releases/v1
-$ git commit -a -m "prod dependencies"
-```
-
-```bash
-$ npm prune --production
-$ git add node_modules
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
+* `master` - ongoing development. You should not use this branch in your GitHub workflows because it will not work.
+* `draft` - a draft of the next release. This may be unstable and also should not be used in your GitHub workflows.
+* `releases/v*` - branches for official releases, where the `*` is replaced with a version number.

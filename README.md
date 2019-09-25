@@ -60,3 +60,7 @@ jobs:
 * `master` - ongoing development. You should not use this branch in your GitHub workflows because it will not work.
 * `draft` - a draft of the next release. This may be unstable and also should not be used in your GitHub workflows.
 * `releases/v*` - branches for official releases, where the `*` is replaced with a version number.
+
+## License
+
+Apache 2.0

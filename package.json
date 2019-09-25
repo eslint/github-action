@@ -4,7 +4,8 @@
   "description": "Run ESLint on GitHub pull requests",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint src/",
+    "eslint:github-action": "eslint src/ tests/ -f json",
+    "lint": "eslint src/ tests/",
     "test": "npm run lint && jest"
   },
   "repository": {

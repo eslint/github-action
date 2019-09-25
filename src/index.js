@@ -9,6 +9,7 @@
 
 const core = require("@actions/core");
 const github = require("@actions/github");
+const exec = require("./exec");
 
 //-----------------------------------------------------------------------------
 // Main
@@ -27,6 +28,7 @@ async function run() {
             return;
         }
 
+        // Create the initial check
         const { data: { id: checkId } } = await octokit.checks.create({
             ...context.repo,
             name: "@eslint/github-action",
@@ -34,6 +36,13 @@ async function run() {
             status: "in_progress"
         });
 
+        // run ESLint
+        const lintResult = JSON.parse(await exec("npm run eslint:github-action"));
+        core.startGroup("ESLint JSON Results");
+        core.debug(JSON.stringify(lintResult, null, 4));
+        core.endGroup();
+        
+        // Update the check with final status
         await octokit.checks.update({
             ...context.repo,
             check_run_id: checkId,

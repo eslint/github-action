@@ -17,9 +17,13 @@ git remote add publisher "${target_repo}"
 
 # Create a new branch
 git checkout -b draft
+
+# Install only production node_modules
 rm -rf node_modules
 sed -i '/node_modules/d' .gitignore # Bash command that removes node_modules from .gitignore
 npm install --production
+
+# Create commit
 git add node_modules .gitignore
 git commit -m "Chore: Automated draft branch creation"
 git push publisher draft -f

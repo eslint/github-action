@@ -21,3 +21,5 @@ jobs:
 
       # Run draft script
       - run: bash scripts/draft.sh
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

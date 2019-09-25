@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Based on https://github.com/mikeal/publish-to-github-action/blob/master/entrypoint.sh
+# License: Apache 2.0 and MIT
+
+# check values
+if [ -z "${GITHUB_TOKEN}" ]; then
+    echo "error: not found GITHUB_TOKEN"
+    exit 1
+fi
+
 # Configure git info
 git config user.name "Draft Publisher"
 git config user.email "drafts@users.noreply.github.com"

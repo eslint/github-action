@@ -27,7 +27,7 @@ async function run() {
             return;
         }
 
-        const { data: { checkId } } = await octokit.checks.create({
+        const { data: { id: checkId } } = await octokit.checks.create({
             ...context.repo,
             name: "@eslint/github-action",
             head_sha: context.sha,

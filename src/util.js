@@ -16,7 +16,7 @@ const { exec } = require("@actions/exec");
 /**
  * Wrapper around the exec() method from @actions/exec. Makes it easier to 
  */
-module.exports = function(command, ...args) {
+exports.exec = function(command, ...args) {
     let output = "";
 
     const options = {
@@ -27,7 +27,7 @@ module.exports = function(command, ...args) {
         }
     };
 
-    return exec(command, ...args, options).then(() => {
+    return exec(command, args, options).then(() => {
         return output;
     });
 };

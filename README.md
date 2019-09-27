@@ -58,5 +58,5 @@ jobs:
 ## Branches
 
 * `master` - ongoing development. You should not use this branch in your GitHub workflows because it will not work.
-* `draft` - a draft of the next release. This may be unstable and also should not be used in your GitHub workflows.
+* `draft` - a draft of the next release. This may be unstable and also should not be used in your GitHub workflows. This branch is automatically created whenever code is committed to `master`.
 * `releases/v*` - branches for official releases, where the `*` is replaced with a version number.

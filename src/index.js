@@ -61,13 +61,17 @@ async function run() {
         if (exitCode > 0) {
             const lintResults = JSON.parse(output);
             annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE)
-            core.startGroup("ESLint Results");
+            summary = createSummary(lintResults);
+
+            core.startGroup("Results");
+            console.log("ESLint Output");
             console.log(JSON.stringify(lintResults, null, 4));
-            console.log("Annotations")
+            console.log("Annotations");
             console.log(JSON.stringify(annotations, null, 4));
+            console.log("Summary:", summary);
+            console.log("Conclusion:", conclusion);
             core.endGroup();
             
-            summary = createSummary(lintResults);
         } else {
             conclusion = "success";
             summary = "No problems";
@@ -77,7 +81,6 @@ async function run() {
         await octokit.checks.update({
             ...context.repo,
             check_run_id: checkId,
-            status: "completed",
             conclusion,
             output: {
                 title: "ESLint Check",

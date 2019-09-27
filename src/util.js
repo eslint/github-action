@@ -58,7 +58,7 @@ exports.createAnnotations = function(lintResults, baseDir) {
     for (const result of lintResults) {
         for (const message of result.messages) {
             annotations.push({
-                path: result.filePath.slice(baseDir.length),
+                path: result.filePath.slice(baseDir.length + 1),
                 start_line: message.line,
                 end_line: "endLine" in message ? message.endLine : message.line,
                 message: message.message,

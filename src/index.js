@@ -60,11 +60,13 @@ async function run() {
 
         if (exitCode > 0) {
             const lintResults = JSON.parse(output);
-            core.startGroup("ESLint JSON Results");
-            core.debug(JSON.stringify(lintResults, null, 4));
+            annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE)
+            core.startGroup("ESLint Results");
+            console.log(JSON.stringify(lintResults, null, 4));
+            console.log("Annotations")
+            console.log(JSON.stringify(annotations, null, 4));
             core.endGroup();
             
-            annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE)
             summary = createSummary(lintResults);
         } else {
             conclusion = "success";

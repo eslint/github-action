@@ -60,7 +60,7 @@ exports.createAnnotations = function(lintResults, baseDir) {
             annotations.push({
                 path: result.filePath.slice(baseDir.length),
                 start_line: message.line,
-                start_column: message.column,
+                end_line: "endLine" in message ? message.endLine : message.line,
                 message: message.message,
                 annotation_level: message.severity === 2 ? "failure" : "warning",
                 title: message.ruleId

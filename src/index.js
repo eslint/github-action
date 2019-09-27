@@ -10,7 +10,7 @@
 const fs = require("fs");
 const core = require("@actions/core");
 const github = require("@actions/github");
-const { exec } = require("./util");
+const { exec, createAnnotations, createSummary } = require("./util");
 
 //-----------------------------------------------------------------------------
 // Helpers
@@ -29,8 +29,11 @@ async function run() {
         const token = core.getInput("githubToken", { required: true });
         const octokit = new github.GitHub(token);
         const context = github.context;
+        let annotations = [];
         let conclusion = "failure";
+        let summary;
 
+        // Only works on pull requests
         if (context.eventName !== "pull_request") {
             core.setFailed("ESLint GitHub Action can only be performed on the pull_request event.");
             return;
@@ -60,10 +63,14 @@ async function run() {
             core.startGroup("ESLint JSON Results");
             core.debug(JSON.stringify(lintResults, null, 4));
             core.endGroup();
+            
+            annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE)
+            summary = createSummary(lintResults);
         } else {
             conclusion = "success";
+            summary = "No problems";
         }
-        
+
         // Update the check with final status
         await octokit.checks.update({
             ...context.repo,
@@ -72,7 +79,8 @@ async function run() {
             conclusion,
             output: {
                 title: "ESLint Check",
-                summary: "No problems found."
+                summary,
+                annotations
             }
         });
 

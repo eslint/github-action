@@ -14,7 +14,11 @@ const { exec } = require("@actions/exec");
 //-----------------------------------------------------------------------------
 
 /**
- * Wrapper around the exec() method from @actions/exec. Makes it easier to 
+ * Wrapper around the exec() method from @actions/exec. Makes it easier to run
+ * commands in the GitHub Action.
+ * @param {string} command The command to run.
+ * @param {string[]} [args] Optional arguments to pass.
+ * @returns {Object} An object with`exitCode` and `output` properties.
  */
 exports.exec = function(command, ...args) {
     let output = "";
@@ -27,7 +31,10 @@ exports.exec = function(command, ...args) {
         }
     };
 
-    return exec(command, args, options).then(() => {
-        return output;
+    return exec(command, args, options).then(exitCode => {
+        return {
+            exitCode,
+            output
+        };
     });
 };

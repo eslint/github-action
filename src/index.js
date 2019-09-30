@@ -100,6 +100,10 @@ async function run() {
             }
         });
 
+        if (exitCode > 0) {
+            core.setFailed(`ESLint found ${ annotations.length } problems.`);
+        }
+
     } catch (error) {
         core.setFailed(error.message);
     }

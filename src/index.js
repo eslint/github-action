@@ -18,6 +18,10 @@ const { exec, createAnnotations, createSummary } = require("./util");
 
 const SCRIPT_NAME = "eslint:github-action";
 
+function getChangedFiles() {
+
+}
+
 //-----------------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------------
@@ -29,21 +33,28 @@ async function run() {
         const token = core.getInput("githubToken", { required: true });
         const octokit = new github.GitHub(token);
         const context = github.context;
+
+        /*
+         * context.sha on pull requests isn't actually the SHA of the commits
+         * on the pull request. Instead, it's the SHA of the commit in the
+         * branch or fork that the pull request was sent from. Leaving
+         * annotations on that SHA means they won't show up in the pull request
+         * UI. So, adjust the SHA so annotations actually show up on the
+         * pull request itself.
+         */
+        const shaToAnnotate = context.payload.pull_request
+            ? context.payload.pull_request.head.sha
+            : context.sha;
+
         let annotations = [];
         let conclusion = "failure";
         let summary;
-
-        // Only works on pull requests
-        if (context.eventName !== "pull_request") {
-            core.setFailed("ESLint GitHub Action can only be performed on the pull_request event.");
-            return;
-        }
 
         // Create the initial check
         const { data: { id: checkId } } = await octokit.checks.create({
             ...context.repo,
             name: "@eslint/github-action",
-            head_sha: context.sha,
+            head_sha: shaToAnnotate,
             status: "in_progress"
         });
 

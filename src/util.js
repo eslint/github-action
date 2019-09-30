@@ -15,6 +15,10 @@ const { exec } = require("@actions/exec");
 // Exports
 //-----------------------------------------------------------------------------
 
+function unusedFunction() {
+
+}
+
 /**
  * Wrapper around the exec() method from @actions/exec. Makes it easier to run
  * commands in the GitHub Action.

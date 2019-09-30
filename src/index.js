@@ -18,10 +18,6 @@ const { exec, createAnnotations, createSummary } = require("./util");
 
 const SCRIPT_NAME = "eslint:github-action";
 
-function getChangedFiles() {
-
-}
-
 //-----------------------------------------------------------------------------
 // Main
 //-----------------------------------------------------------------------------

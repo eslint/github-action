@@ -85,7 +85,7 @@ async function run() {
             
         } else {
             conclusion = "success";
-            summary = "No problems";
+            summary = "No problems found";
         }
 
         // Update the check with final status
@@ -101,7 +101,7 @@ async function run() {
         });
 
         if (exitCode > 0) {
-            core.setFailed(`ESLint found ${ annotations.length } problems.`);
+            core.setFailed(summary);
         }
 
     } catch (error) {

@@ -24,6 +24,8 @@ exports.exec = function(command, ...args) {
     let output = "";
 
     const options = {
+        silent: true,
+        ignoreReturnCode: true,
         listeners: {
             stdout(data) {
                 output += data.toString();
@@ -36,11 +38,14 @@ exports.exec = function(command, ...args) {
             exitCode,
             output
         };
+<<<<<<< Updated upstream
     }).catch(error => {
         return {
             exitCode: 1,
             output
         };
+=======
+>>>>>>> Stashed changes
     });
 };
 

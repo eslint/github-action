@@ -53,7 +53,7 @@ async function run() {
         // Create the initial check
         const { data: { id: checkId } } = await octokit.checks.create({
             ...context.repo,
-            name: "@eslint/github-action",
+            name: context.action,
             head_sha: shaToAnnotate,
             status: "in_progress"
         });

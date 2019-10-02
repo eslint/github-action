@@ -3,6 +3,8 @@
  * @author Nicholas C. Zakas
  */
 
+"use strict";
+
 //-----------------------------------------------------------------------------
 // Requirements
 //-----------------------------------------------------------------------------
@@ -24,8 +26,8 @@ const CHECK_NAME = "ESLint";
 // Main
 //-----------------------------------------------------------------------------
 
-// most @actions toolkit packages have async methods
-async function run() {
+
+(async() => {
     try {
 
         const token = core.getInput(TOKEN_NAME, { required: true });
@@ -58,18 +60,20 @@ async function run() {
 
         // Read the command from package.json (necessary to avoid extra output)
         const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+
         if (!pkg.scripts || !pkg.scripts[SCRIPT_NAME]) {
-            core.setFailed(`Missing ${ SCRIPT_NAME } script in package.json.`);
+            core.setFailed(`Missing ${SCRIPT_NAME} script in package.json.`);
             return;
         }
         const command = pkg.scripts[SCRIPT_NAME];
 
         // run ESLint
-        const { exitCode, output } = await exec(`npx ${ command }`);
+        const { exitCode, output } = await exec(`npx ${command}`);
 
         if (exitCode > 0) {
             const lintResults = JSON.parse(output);
-            annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE)
+
+            annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE);
             summary = createSummary(lintResults);
 
             core.startGroup("Results");
@@ -80,7 +84,7 @@ async function run() {
             console.log("Summary:", summary);
             console.log("Conclusion:", conclusion);
             core.endGroup();
-            
+
         } else {
             conclusion = "success";
             summary = "No problems found";
@@ -105,6 +109,4 @@ async function run() {
     } catch (error) {
         core.setFailed(error.message);
     }
-}
-
-run();
+})();

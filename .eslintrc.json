@@ -4,7 +4,7 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "eslint"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -13,5 +13,7 @@
         "ecmaVersion": 2018
     },
     "rules": {
+        "no-console": "off",
+        "camelcase": ["error", {"properties": "never"}]
     }
 }

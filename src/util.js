@@ -3,6 +3,8 @@
  * @author Nicholas C. Zakas
  */
 
+"use strict";
+
 //-----------------------------------------------------------------------------
 // Requirements
 //-----------------------------------------------------------------------------
@@ -33,23 +35,21 @@ exports.exec = function(command, ...args) {
         }
     };
 
-    return exec(command, args, options).then(exitCode => {
-        return {
-            exitCode,
-            output
-        };
-    });
+    return exec(command, args, options).then(exitCode => ({
+        exitCode,
+        output
+    }));
 };
 
 /**
  * Creates annotations based on the lint results.
- * @param {Array} lineResults An array of lint results from an ESLint run.
+ * @param {Array} lintResults An array of lint results from an ESLint run.
  * @param {string} baseDir The base directory to strip off of the file paths
  *      for each result.
  * @returns {Array} An array of GitHub annotations.
  */
 exports.createAnnotations = function(lintResults, baseDir) {
-    
+
     const annotations = [];
 
     for (const result of lintResults) {
@@ -79,11 +79,11 @@ exports.createAnnotations = function(lintResults, baseDir) {
 
 /**
  * Creates a summary of the ESLint run.
- * @param {Array} lineResults An array of lint results from an ESLint run.
+ * @param {Array} lintResults An array of lint results from an ESLint run.
  * @returns {string} A description of the ESLint run results.
  */
 exports.createSummary = function(lintResults) {
-    
+
     let errors = 0;
     let warnings = 0;
 
@@ -97,5 +97,5 @@ exports.createSummary = function(lintResults) {
         }
     }
 
-    return `${ errors + warnings} problems (${ errors } errors, ${ warnings } warnings) found`;
+    return `${errors + warnings} problems (${errors} errors, ${warnings} warnings) found`;
 };

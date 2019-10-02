@@ -17,6 +17,8 @@ const { exec, createAnnotations, createSummary } = require("./util");
 //-----------------------------------------------------------------------------
 
 const SCRIPT_NAME = "eslint:github-action";
+const TOKEN_NAME = "githubToken";
+const CHECK_NAME = "ESLint";
 
 //-----------------------------------------------------------------------------
 // Main
@@ -26,7 +28,7 @@ const SCRIPT_NAME = "eslint:github-action";
 async function run() {
     try {
 
-        const token = core.getInput("githubToken", { required: true });
+        const token = core.getInput(TOKEN_NAME, { required: true });
         const octokit = new github.GitHub(token);
         const context = github.context;
 
@@ -49,7 +51,7 @@ async function run() {
         // Create the initial check
         const { data: { id: checkId } } = await octokit.checks.create({
             ...context.repo,
-            name: context.action,
+            name: CHECK_NAME,
             head_sha: shaToAnnotate,
             status: "in_progress"
         });
@@ -90,7 +92,7 @@ async function run() {
             check_run_id: checkId,
             conclusion,
             output: {
-                title: "ESLint Check",
+                title: CHECK_NAME,
                 summary,
                 annotations
             }
@@ -105,4 +107,4 @@ async function run() {
     }
 }
 
-run()
+run();

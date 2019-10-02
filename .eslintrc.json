@@ -15,5 +15,14 @@
     "rules": {
         "no-console": "off",
         "camelcase": ["error", {"properties": "never"}]
-    }
+    },
+    "overrides": [
+        {
+            "files": "tests/*.js",
+            "globals": {
+                "test": "readonly",
+                "expect": "readonly"
+            }
+        }
+    ]
 }

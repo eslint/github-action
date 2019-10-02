@@ -6,7 +6,7 @@
   "scripts": {
     "eslint:github-action": "eslint src/ tests/ -f json",
     "lint": "eslint src/ tests/",
-    "test": "npm run lint && jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

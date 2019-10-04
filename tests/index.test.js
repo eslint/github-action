@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------
 // Requirements
 //-----------------------------------------------------------------------------
-
+const { expect } = require("chai");
 const cp = require("child_process");
 const path = require("path");
 
@@ -18,14 +18,19 @@ const path = require("path");
 
 const SCRIPT_LOCATION = `node ${ path.resolve(__dirname, "../src/index.js") }`;
 
-
+/**
+ * Helper to test that the GitHub Action exits with an appropriate error
+ * message.
+ * @param {Function} run The function to run. 
+ * @param {string} text The text that must appear in the error.
+ */
 function expectFailure(run, text) {
     try {
         run();
         throw new Error("Script did not fail.");
     } catch (ex) {
         if (ex.stdout) {
-            expect(ex.stdout.toString()).toContain("githubToken");
+            expect(ex.stdout.toString()).to.have.string("githubToken");
         } else {
             throw ex;
         }
@@ -36,29 +41,10 @@ function expectFailure(run, text) {
 // Tests
 //-----------------------------------------------------------------------------
 
-
-test("should fail when missing GitHub token", () => {
-    expectFailure(() => {
-        cp.execSync(SCRIPT_LOCATION);
-    }, "githubToken");    
+describe("GitHub Action", () => {
+    it("should fail when missing GitHub token", () => {
+        expectFailure(() => {
+            cp.execSync(SCRIPT_LOCATION);
+        }, "githubToken");    
+    });
 });
-
-// shows how the runner will run a javascript action with env / stdout protocol
-// xtest("test runs", () => {
-//     const ip = path.resolve(__dirname, "../src/index.js");
-
-//     try {
-//         const output = cp.execSync(`node ${ip}`, {
-//             env: {
-//                 ...process.env,
-//                 INPUT_GITHUBTOKEN: "abcxyz"
-//             }
-//         });
-
-//         console.log(output.toString());
-//     } catch (ex) {
-//         console.log(ex.stdout.toString());
-//         console.log(ex.stderr.toString());
-//         throw ex;
-//     }
-// });

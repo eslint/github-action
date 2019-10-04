@@ -19,9 +19,8 @@
     "overrides": [
         {
             "files": "tests/*.js",
-            "globals": {
-                "test": "readonly",
-                "expect": "readonly"
+            "env": {
+                "mocha": true
             }
         }
     ]

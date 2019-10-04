@@ -47,7 +47,7 @@ const CHECK_NAME = "ESLint";
             : context.sha;
 
         let annotations = [];
-        let conclusion = "failure";
+        const conclusion = "failure";
         let summary;
 
         // Read the command from package.json (necessary to avoid extra output)
@@ -86,20 +86,36 @@ const CHECK_NAME = "ESLint";
             console.log("Conclusion:", conclusion);
             core.endGroup();
 
-            // Update the check with final status and annotations
-            await octokit.checks.update({
-                ...context.repo,
-                check_run_id: checkId,
-                conclusion,
-                output: {
-                    title: CHECK_NAME,
-                    summary,
-                    annotations
-                }
-            });
+            /*
+             * Update the final check status and add annotations. Note that
+             * only 50 annotations can be added per update check API call,
+             * so we need to make multiple calls if there are more than 50
+             * annotations.
+             */
+            let annotationsStart = 0;
 
+            do {
+                const annotationsToPost =
+                    annotations.slice(annotationsStart, annotationsStart + 50);
+
+                await octokit.checks.update({
+                    ...context.repo,
+                    check_run_id: checkId,
+                    conclusion,
+                    output: {
+                        title: CHECK_NAME,
+                        summary,
+                        annotations: annotationsToPost
+                    }
+                });
+
+                annotationsStart += 50;
+
+            } while (annotationsStart < annotations.length);
+
+            // set original check to fail
             core.setFailed(summary);
-        }    
+        }
 
     } catch (error) {
         core.setFailed(error.message);

@@ -8,6 +8,7 @@
 //-----------------------------------------------------------------------------
 // Requirements
 //-----------------------------------------------------------------------------
+
 const { expect } = require("chai");
 const cp = require("child_process");
 const path = require("path");
@@ -16,13 +17,15 @@ const path = require("path");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const SCRIPT_LOCATION = `node ${ path.resolve(__dirname, "../src/index.js") }`;
+const SCRIPT_LOCATION = `node ${path.resolve(__dirname, "../src/index.js")}`;
 
 /**
  * Helper to test that the GitHub Action exits with an appropriate error
  * message.
- * @param {Function} run The function to run. 
+ * @param {Function} run The function to run.
  * @param {string} text The text that must appear in the error.
+ * @returns {void}
+ * @throws {Error} When an unexpected error occurs.
  */
 function expectFailure(run, text) {
     try {
@@ -30,7 +33,7 @@ function expectFailure(run, text) {
         throw new Error("Script did not fail.");
     } catch (ex) {
         if (ex.stdout) {
-            expect(ex.stdout.toString()).to.have.string("githubToken");
+            expect(ex.stdout.toString()).to.have.string(text);
         } else {
             throw ex;
         }
@@ -45,6 +48,6 @@ describe("GitHub Action", () => {
     it("should fail when missing GitHub token", () => {
         expectFailure(() => {
             cp.execSync(SCRIPT_LOCATION);
-        }, "githubToken");    
+        }, "githubToken");
     });
 });

@@ -50,14 +50,6 @@ const CHECK_NAME = "ESLint";
         let conclusion = "failure";
         let summary;
 
-        // Create the initial check
-        const { data: { id: checkId } } = await octokit.checks.create({
-            ...context.repo,
-            name: CHECK_NAME,
-            head_sha: shaToAnnotate,
-            status: "in_progress"
-        });
-
         // Read the command from package.json (necessary to avoid extra output)
         const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
@@ -71,6 +63,15 @@ const CHECK_NAME = "ESLint";
         const { exitCode, output } = await exec(`npx ${command}`);
 
         if (exitCode > 0) {
+
+            // Create the initial check
+            const { data: { id: checkId } } = await octokit.checks.create({
+                ...context.repo,
+                name: CHECK_NAME,
+                head_sha: shaToAnnotate,
+                status: "in_progress"
+            });
+
             const lintResults = JSON.parse(output);
 
             annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE);
@@ -85,26 +86,20 @@ const CHECK_NAME = "ESLint";
             console.log("Conclusion:", conclusion);
             core.endGroup();
 
-        } else {
-            conclusion = "success";
-            summary = "No problems found";
-        }
+            // Update the check with final status and annotations
+            await octokit.checks.update({
+                ...context.repo,
+                check_run_id: checkId,
+                conclusion,
+                output: {
+                    title: CHECK_NAME,
+                    summary,
+                    annotations
+                }
+            });
 
-        // Update the check with final status
-        await octokit.checks.update({
-            ...context.repo,
-            check_run_id: checkId,
-            conclusion,
-            output: {
-                title: CHECK_NAME,
-                summary,
-                annotations
-            }
-        });
-
-        if (exitCode > 0) {
             core.setFailed(summary);
-        }
+        }    
 
     } catch (error) {
         core.setFailed(error.message);

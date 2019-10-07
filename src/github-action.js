@@ -26,5 +26,9 @@ const path = require("path");
 const pkgFilename = path.resolve(__dirname, "../package.json");
 const pkg = JSON.parse(fs.readFileSync(pkgFilename));
 
-// run that version from npm
-cp.execSync(`npx @eslint/github-action@${ pkg.version }`);
+// in dev mode, run locally
+if (process.env.ESLINT_DRAFT) {
+    cp.execSync("node src/bin.js");
+} else {
+    cp.execSync(`npx ${ pkg.name }@${ pkg.version }`);
+}

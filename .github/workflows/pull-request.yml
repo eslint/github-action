@@ -24,3 +24,5 @@ jobs:
       - uses: eslint/github-action@draft
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          ESLINT_DRAFT: 1

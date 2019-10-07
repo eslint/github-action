@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * @fileoverview Main GitHub Action file
  * @author Nicholas C. Zakas

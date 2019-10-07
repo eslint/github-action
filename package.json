@@ -2,7 +2,10 @@
   "name": "@eslint/github-action",
   "version": "0.0.0",
   "description": "Run ESLint on GitHub pull requests",
-  "main": "src/index.js",
+  "bin": "src/bin.js",
+  "files": [
+    "src"
+  ],
   "scripts": {
     "eslint:github-action": "eslint src/ tests/ -f json",
     "lint": "eslint src/ tests/",
@@ -11,6 +14,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eslint/github-action.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "ESLint",

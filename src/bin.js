@@ -74,18 +74,8 @@ const CHECK_NAME = "ESLint";
             });
 
             const lintResults = JSON.parse(output);
-
             annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE);
             summary = createSummary(lintResults);
-
-            core.startGroup("Results");
-            console.log("ESLint Output");
-            console.log(JSON.stringify(lintResults, null, 4));
-            console.log("Annotations");
-            console.log(JSON.stringify(annotations, null, 4));
-            console.log("Summary:", summary);
-            console.log("Conclusion:", conclusion);
-            core.endGroup();
 
             /*
              * Update the final check status and add annotations. Note that

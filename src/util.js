@@ -53,23 +53,25 @@ exports.createAnnotations = function(lintResults, baseDir) {
     const annotations = [];
 
     for (const result of lintResults) {
-        for (const message of result.messages) {
-            const annotation = {
-                path: result.filePath.slice(baseDir.length + 1),
-                start_line: message.line,
-                end_line: "endLine" in message ? message.endLine : message.line,
-                message: message.message,
-                annotation_level: message.severity === 2 ? "failure" : "warning",
-                title: message.ruleId
-            };
+        if (Array.isArray(result.messages)) {
+            for (const message of result.messages) {
+                const annotation = {
+                    path: result.filePath.slice(baseDir.length + 1),
+                    start_line: message.line,
+                    end_line: "endLine" in message ? message.endLine : message.line,
+                    message: message.message,
+                    annotation_level: message.severity === 2 ? "failure" : "warning",
+                    title: message.ruleId
+                };
 
-            // GitHub only honors columns when start and end line are the same
-            if (message.line === message.endLine) {
-                annotation.start_column = message.column;
-                annotation.end_column = message.endColumn;
+                // GitHub only honors columns when start and end line are the same
+                if (message.line === message.endLine) {
+                    annotation.start_column = message.column;
+                    annotation.end_column = message.endColumn;
+                }
+
+                annotations.push(annotation);
             }
-
-            annotations.push(annotation);
 
         }
     }

@@ -1,0 +1,62 @@
+[
+    {
+        "path": "src/github-action.js",
+        "start_line": 30,
+        "end_line": 30,
+        "message": "Expected line before comment.",
+        "annotation_level": "failure",
+        "title": "lines-around-comment",
+        "start_column": 5,
+        "end_column": 32
+    },
+    {
+        "path": "src/github-action.js",
+        "start_line": 34,
+        "end_line": 34,
+        "message": "Unexpected space(s) after '${'.",
+        "annotation_level": "failure",
+        "title": "template-curly-spacing"
+    },
+    {
+        "path": "src/github-action.js",
+        "start_line": 34,
+        "end_line": 34,
+        "message": "Unexpected space(s) before '}'.",
+        "annotation_level": "failure",
+        "title": "template-curly-spacing"
+    },
+    {
+        "path": "src/github-action.js",
+        "start_line": 34,
+        "end_line": 34,
+        "message": "Unexpected space(s) after '${'.",
+        "annotation_level": "failure",
+        "title": "template-curly-spacing"
+    },
+    {
+        "path": "src/github-action.js",
+        "start_line": 34,
+        "end_line": 34,
+        "message": "Unexpected space(s) before '}'.",
+        "annotation_level": "failure",
+        "title": "template-curly-spacing"
+    },
+    {
+        "path": "src/util.js",
+        "start_line": 18,
+        "end_line": 20,
+        "message": "Missing JSDoc comment.",
+        "annotation_level": "failure",
+        "title": "require-jsdoc"
+    },
+    {
+        "path": "src/util.js",
+        "start_line": 18,
+        "end_line": 18,
+        "message": "'unusedFunction' is defined but never used.",
+        "annotation_level": "failure",
+        "title": "no-unused-vars",
+        "start_column": 10,
+        "end_column": 24
+    }
+]

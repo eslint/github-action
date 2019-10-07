@@ -27,12 +27,14 @@ const pkgFilename = path.resolve(__dirname, "../package.json");
 const pkg = JSON.parse(fs.readFileSync(pkgFilename));
 
 try {
+
     // in dev mode, run locally
     if (process.env.ESLINT_DRAFT) {
         cp.execSync("node src/bin.js");
     } else {
-        cp.execSync(`npx ${ pkg.name }@${ pkg.version }`);
+        cp.execSync(`npx ${pkg.name}@${pkg.version}`);
     }
 } catch (ex) {
+    process.exitCode = 1;
     console.log(ex.output.toString());
 }

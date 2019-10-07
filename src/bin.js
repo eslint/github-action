@@ -74,6 +74,7 @@ const CHECK_NAME = "ESLint";
             });
 
             const lintResults = JSON.parse(output);
+
             annotations = createAnnotations(lintResults, process.env.GITHUB_WORKSPACE);
             summary = createSummary(lintResults);
 

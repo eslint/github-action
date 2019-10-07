@@ -17,7 +17,7 @@ const path = require("path");
 // Helpers
 //-----------------------------------------------------------------------------
 
-const SCRIPT_LOCATION = `node ${path.resolve(__dirname, "../src/index.js")}`;
+const SCRIPT_LOCATION = `node ${path.resolve(__dirname, "../src/bin.js")}`;
 
 /**
  * Helper to test that the GitHub Action exits with an appropriate error

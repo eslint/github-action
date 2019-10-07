@@ -9,7 +9,12 @@
   "scripts": {
     "eslint:github-action": "eslint src/ tests/ -f json",
     "lint": "eslint src/ tests/",
-    "test": "mocha tests/"
+    "test": "mocha tests/",
+    "generate-release": "eslint-generate-release",
+    "generate-alpharelease": "eslint-generate-prerelease alpha",
+    "generate-betarelease": "eslint-generate-prerelease beta",
+    "generate-rcrelease": "eslint-generate-prerelease rc",
+    "publish-release": "eslint-publish-release"
   },
   "repository": {
     "type": "git",
@@ -40,6 +45,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^6.3.0",
+    "eslint-release": "^1.2.0",
     "mocha": "^6.2.1"
   },
   "engines": {

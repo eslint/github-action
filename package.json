@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "eslint:github-action": "eslint src/ tests/ -f json",
-    "lint": "eslint src/ tests/",
+    "lint": "eslint src/ tests/ scripts/",
     "test": "mocha tests/*.test.js",
+    "update-tag": "node scripts/update-tag.js",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",
     "generate-betarelease": "eslint-generate-prerelease beta",
     "generate-rcrelease": "eslint-generate-prerelease rc",
-    "publish-release": "eslint-publish-release"
+    "publish-release": "eslint-publish-release && npm run update-tag"
   },
   "repository": {
     "type": "git",

@@ -57,6 +57,19 @@ jobs:
 
 ## Branches
 
-* `master` - ongoing development. You should not use this branch in your GitHub workflows because it will not work.
+* `master` - ongoing development. You should not use this branch in your GitHub workflows because it will not work (no dependencies checked in).
 * `draft` - a draft of the next release. This may be unstable and also should not be used in your GitHub workflows. This branch is automatically created whenever code is committed to `master`.
-* `releases/v*` - branches for official releases, where the `*` is replaced with a version number.
+
+## Frequently Asked Questions
+
+### Why do I need to define a `eslint:github-action` npm script?
+
+Different projects use ESLint in different ways, and it's not possible to come up with a single configuration that would work correctly for every project. You may be using certain command line flags, ignoring certain files, or using tools that call ESLint. The best way to know how your project uses ESLint is for you to tell us by creating a script that the GitHub Action uses.
+
+### Why does the `eslint:github-action` npm script need to lint all of my files?
+
+ESLint command line flags like `--ext` alter the files that ESLint lints. If you are using [eslint-plugin-markdown](https://npmjs.com/package/eslint-plugin-markdown), for example, then you might want ESLint to run on files ending with `.md`. Rather than trying to guess which files in a pull request might want linting applied, it's easier for you to create a script that does exactly what you want. The GitHub Action can then pull the appropriate information out of the results to report them.
+
+### How does the GitHub Action work?
+
+GitHub executes the `src/github-action.js` file. That file, in turn, calls `npx @eslint/github-action`, using the version number found in `package.json`, to execute the logic. By publishing the GitHub Action to npm and then running it with `npx`, we avoid the need to check dependencies into the repository.

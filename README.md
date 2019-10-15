@@ -8,21 +8,19 @@ In order to use this action, your project must have ESLint configured to run wit
 
 ## Configuring
 
-First, create an npm script called `eslint:github-action` in your `package.json` file. This script should run ESLint on all of the files that should be linted on a pull request. The script must include the `-f json` option, which outputs ESLint results in JSON format. This is important for the action to understand the ESLint results. Here's an example script:
+First, create an npm script called `eslint:github-action` in your `package.json` file. This script should run ESLint on all of the files that should be linted on a pull request. The script must include the `-f compact` option, which outputs ESLint results in JSON format. This is important for the action to understand the ESLint results. Here's an example script:
 
 ```json
 {
   "scripts": {
-    "eslint:github-action": "eslint src/ -f json"
+    "eslint:github-action": "eslint src/ -f compact"
   }
 }
 ```
 
 You can also add in any additional command line arguments to ESLint in the `eslint:github-action` script so that ESLint runs exactly the way you want it to.
 
-Next, you'll need to create GitHub Actions workflow file to use this action, and you'll need to know the latest version of this action.
-
-To find the latest version of this action, see the [releases](https://github.com/eslint/github-action/releases) page. If the latest release is `v1`, you would use this action in your workflow file as follows:
+Next, you'll need to create GitHub Actions workflow file to use this action, such as:
 
 ```yaml
 name: Run ESLint on Pull Requests
@@ -48,12 +46,8 @@ jobs:
       - run: npm ci
 
       # Run ESLint
-      - uses: eslint/github-action@v1
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - uses: eslint/github-action@v0
 ```
-
-**Note:** The `GITHUB_TOKEN` secret is automatically created by GitHub for every project; there is no need to create your own secret unless you want to use a token that is different from the default.
 
 ## Branches
 

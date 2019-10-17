@@ -13,10 +13,12 @@ First, create an npm script called `eslint:github-action` in your `package.json`
 ```json
 {
   "scripts": {
-    "eslint:github-action": "eslint src/ -f compact"
+    "eslint:github-action": "eslint src/"
   }
 }
 ```
+
+**Note:** Do not include the `-f` flag in your script. The ESLint GitHub Action relies on the default `stylish` ESLint formatter to find and annotate errors.
 
 You can also add in any additional command line arguments to ESLint in the `eslint:github-action` script so that ESLint runs exactly the way you want it to.
 

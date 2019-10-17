@@ -9,7 +9,7 @@
   "scripts": {
     "eslint:github-action": "eslint src/ tests/",
     "lint": "eslint src/ tests/ scripts/",
-    "test": "mocha tests/*.test.js",
+    "test": "npm run lint && mocha tests/*.test.js",
     "update-tag": "node scripts/update-tag.js",
     "generate-release": "eslint-generate-release",
     "generate-alpharelease": "eslint-generate-prerelease alpha",

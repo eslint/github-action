@@ -7,7 +7,7 @@
     "src"
   ],
   "scripts": {
-    "eslint:github-action": "eslint src/ tests/ -f compact",
+    "eslint:github-action": "eslint src/ tests/",
     "lint": "eslint src/ tests/ scripts/",
     "test": "mocha tests/*.test.js",
     "update-tag": "node scripts/update-tag.js",

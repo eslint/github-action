@@ -61,17 +61,17 @@ console.log(`##[add-matcher]${MATCHER_PATH}`);
         // let summary;
 
         // Read the command from package.json (necessary to avoid extra output)
-        const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+        // const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
-        if (!pkg.scripts || !pkg.scripts[SCRIPT_NAME]) {
-            core.setFailed(`Missing ${SCRIPT_NAME} script in package.json.`);
-            return;
-        }
-        const command = pkg.scripts[SCRIPT_NAME];
+        // if (!pkg.scripts || !pkg.scripts[SCRIPT_NAME]) {
+        //     core.setFailed(`Missing ${SCRIPT_NAME} script in package.json.`);
+        //     return;
+        // }
+        // const command = pkg.scripts[SCRIPT_NAME];
 
         // run ESLint
         // const { exitCode, output } = await exec(`npx ${command}`);
-        await exec(`npx ${command}`);
+        await exec(`npm run ${SCRIPT_NAME}`);
 
         // if (exitCode > 0) {
 

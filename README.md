@@ -8,7 +8,7 @@ In order to use this action, your project must have ESLint configured to run wit
 
 ## Configuring
 
-First, create an npm script called `eslint:github-action` in your `package.json` file. This script should run ESLint on all of the files that should be linted on a pull request. The script must include the `-f compact` option, which outputs ESLint results in JSON format. This is important for the action to understand the ESLint results. Here's an example script:
+First, create an npm script called `eslint:github-action` in your `package.json` file. This script should run ESLint on all of the files that should be linted on a pull request. Here's an example script:
 
 ```json
 {

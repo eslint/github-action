@@ -1,6 +1,6 @@
-# ESLint GitHub Action
+# Deprecated: ESLint GitHub Action
 
-This GitHub Action is designed to run ESLint on a pull request and leave comments on any issues found.
+The GitHub-created `actions/setup-node` already supports annotating ESLint errors on commits and pull requests. Please use that instead.
 
 ### Prerequisites
 
